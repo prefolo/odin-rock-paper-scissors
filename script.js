@@ -35,28 +35,41 @@ function playRound(playerSelection, computerSelection) {
 	}
 }
 
-function game() {
-	let playerScore = 0;
-	let computerScore = 0;
+const buttons = document.querySelectorAll('button');
+const resultBox = document.querySelector('.results');
 
-	for (let i = 0; i < 5; i++) {
-		let playerSelection = prompt('Choose Rock, Paper or Scissors.');
-		let computerSelection = getComputerChoice();
+let roundCount = 0;
+let playerScore = 0;
+let computerScore = 0;
 
-		let result = playRound(playerSelection, computerSelection);
+function game(e) {
+	let playerSelection = e.target.innerText;
+	let computerSelection = getComputerChoice();
 
-        if (result == undefined) {
-            console.log(i + 1 + '. You didn\'t enter a rock, paper or scissors value. This round is skipped.');
-            continue;
-		}
+	let result = playRound(playerSelection, computerSelection);
 
-		if (result.startsWith('You Won')) playerScore++;
-		if (result.startsWith('You Lose')) computerScore++;
+	if (result.startsWith('You Won')) playerScore++;
+	if (result.startsWith('You Lose')) computerScore++;
 
-		console.log(i + 1 + '. ' + result);
+	if (roundCount == 0) resultBox.innerHTML = '';
+	resultBox.innerHTML += roundCount + 1 + '. ' + result + '<br>';
+
+	roundCount++;
+
+	if (roundCount > 4) {
+		resultBox.innerHTML += '<br><br>';
+		if (playerScore > computerScore)
+			resultBox.innerHTML += '<b>You Won!</b>';
+		if (playerScore < computerScore)
+			resultBox.innerHTML += '<b>You Lose!</b>';
+		if (playerScore == computerScore) resultBox.innerHTML += '<b>Tie.</b>';
+
+		roundCount = 0;
+		playerScore = 0;
+		computerScore = 0;
 	}
-
-	if (playerScore > computerScore) console.log('You Won!');
-	if (playerScore < computerScore) console.log('You Lose!');
-	if (playerScore == computerScore) console.log('Tie.');
 }
+
+buttons.forEach((button) => {
+	button.addEventListener('click', game);
+});
