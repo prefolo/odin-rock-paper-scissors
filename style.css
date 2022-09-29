@@ -10,8 +10,9 @@ html{
 body{
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    height: 100vh;
 }
 
 h1{
@@ -37,4 +38,16 @@ button{
 .buttons{
     display: flex;
     gap:50px;
+}
+
+.results{
+    height:170px;
+}
+
+.footer{
+    width:100%;
+    color: #aaa;
+    display:flex;
+    justify-content: center;
+    align-items:center;
 }
